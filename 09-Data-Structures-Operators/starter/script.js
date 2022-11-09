@@ -26,4 +26,21 @@ const restaurant = {
       close: 24,
     },
   },
+  order: function (startIndex, mainIndex) {
+    return [this.starterMenu[startIndex], this.mainMenu[mainIndex]];
+  },
+  // arrowOrder: (startIndex, mainIndex) => {
+  //   const self = this;
+  //   [self.starterMenu[startIndex], self.mainMenu[mainIndex]];
+  // },
 };
+
+//destructure
+const [x, y] = restaurant.order(0, 0);
+// const [a, b] = restaurant.arrowOrder(0, 0);
+console.log(x, y);
+// destruc nesty array
+
+const nestyArray = [4, 5, [1, 2]];
+const [a, b, [c, d]] = nestyArray;
+console.log(a, b, c, d);
