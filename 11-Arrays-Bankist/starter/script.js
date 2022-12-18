@@ -61,6 +61,24 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdraw';
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--deposit">${
+          i + 1
+        } ${type}</div>
+        <div class="movements__value">${mov}€</div>
+      </div>
+    `;
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -72,5 +90,52 @@ const currencies = new Map([
 ]);
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
 
+const movementsUsd = movements.map(function (mov) {
+  return mov * 2;
+});
+console.log(movementsUsd);
+
+const arrowMovementsUsd = movements.map(mov => mov * 2);
+console.log(arrowMovementsUsd);
 /////////////////////////////////////////////////
+
+console.log(movements);
+
+const createUsername = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+const arrowCreateUsername = accs => {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUsername(accounts);
+console.log(accounts);
+
+const deposit = movements.filter(mov => mov > 0);
+const depositForLoop = [];
+for (const mov of movements) mov > 0 ? depositForLoop.push(mov) : '';
+
+const withdraw = movements.filter(mov => mov < 0);
+
+console.log(deposit);
+console.log(depositForLoop);
+console.log(withdraw);
+
+const total = movements.reduce((acc, cur) => acc + cur, movements[0]);
+const maxinum = movements.reduce((acc, cur) => (acc > cur ? acc : cur));
+console.log(maxinum);
