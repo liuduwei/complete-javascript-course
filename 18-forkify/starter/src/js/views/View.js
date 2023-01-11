@@ -7,6 +7,28 @@ export default class View {
     this._data = data;
     this._renderHtml();
   }
+  update(data) {
+    this._data = data;
+    // console.log(this._data);
+    const newMarkup = this._getMarkupHtml();
+    const newDom = document.createRange().createContextualFragment(newMarkup);
+    const newElement = Array.from(newDom.querySelectorAll('*'));
+    const currentElement = Array.from(this._parentEl.querySelectorAll('*'));
+
+    newElement.forEach(function(newEl, i) {
+      const curEl = currentElement[i]; // console.log(curEl, newEl.isEqualNode(curEl));
+      // console.dir(newEl);
+      if(!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
+        curEl.textContent = newEl.textContent
+      }
+
+      if(!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(function(el) {
+          curEl.setAttribute(el.name, el.value);
+        });
+      }
+    })
+  }
 
   _renderHtml(){};
 

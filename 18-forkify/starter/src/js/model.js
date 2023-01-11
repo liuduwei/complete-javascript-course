@@ -5,11 +5,12 @@ export const state = {
   recipe: {},
   search: {
     query: '',
-    recipes: {},
-    currentPage: 0,
+    recipes: [],
+    currentPage: 1,
     perPageNum: PERPAGE_NUM,
     maxPage: 0
-  }
+  },
+  bookmarks: []
 };
 
 export const loadRecipe = async function (id) {
@@ -26,10 +27,11 @@ export const loadRecipe = async function (id) {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id)) state.recipe.bookmarked = true;
   } catch (e) {
     throw e;
-  }
-};
+  } }
 
 export const loadSearch = async function(query) {
   try {
@@ -37,14 +39,55 @@ export const loadSearch = async function(query) {
     const data = await getJson(`${API_URL}?search=${query}`);
     if(data.data.recipes.length === 0) throw Error('change key word');
     state.search.recipes = data.data.recipes;
+    state.search.currentPage = 1;
   } catch (e) {
     throw e;
   }
 }
 
-export const getRenderPage = function(page = 1) {
+export const getRenderPage = function(page = state.search.currentPage) {
   state.search.currentPage = page;
   const start = (page - 1) * state.search.perPageNum; // 0
   const end = page * state.search.perPageNum; // 9
   return state.search.recipes.slice(start, end);
 }
+
+export const updateServing = function(newServing) {
+  state.recipe.ingredients.forEach(function(el) {
+    el.quantity = (el.quantity / state.recipe.servings) * newServing;
+  });
+  state.recipe.servings = newServing;
+}
+
+export const presistBookmarks = function() {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+}
+
+export const addBookmark = function(recipe) {
+  // 0) push bookmark
+  state.bookmarks.push(recipe);
+
+  // 1) set bookmarked to true
+  state.recipe.bookmarked = true;
+
+  presistBookmarks()
+}
+
+export const deleteBookmark = function(id) {
+  const index = state.bookmarks.findIndex(d => d.id ===id);
+  state.bookmarks.splice(index, 1);
+  state.recipe.bookmarked = false;
+
+  presistBookmarks()
+}
+
+const init = function() {
+  const storage = localStorage.getItem('bookmarks');
+  if (storage) state.bookmarks = JSON.parse(storage);
+}
+init();
+
+const clearLocalstorage = function() {
+  localStorage.removeItem('bookmarks');
+}
+// clearLocalstorage();

@@ -1,9 +1,10 @@
 import View from './View';
 import icon from 'url:../../img/icons.svg';
-class ResultView extends View {
-  _parentEl = document.querySelector('.results');
+class previewView extends View {
+  _parentEl = document.querySelector('.bookmarks__list');
   render(data) {
     this._data = data;
+    console.log(this._data);
     const markup = this._getMarkupHtml();
     this._clear();
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
@@ -34,4 +35,4 @@ class ResultView extends View {
   }
 }
 
-export default new ResultView();
+export default new previewView();
