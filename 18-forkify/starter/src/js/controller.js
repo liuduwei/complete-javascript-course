@@ -5,6 +5,8 @@ import ResultView from './views/resultView.js';
 import paginationView from './views/paginationView.js';
 import resultView from './views/resultView.js';
 import bookmarkView from './views/bookmarkView.js';
+import addRecipeView from './views/addRecipeView.js';
+import { MOADL_ESC_SEC } from './config.js';
 
 ///////////////////////////////////////
 
@@ -61,6 +63,23 @@ const controlLoadBookmark = function() {
   bookmarkView.render(model.state.bookmarks);
 }
 
+const controladdRecipe = async function(newRecipe) {
+  try {
+  addRecipeView.renderLoding();
+  await model.uploadRecipe(newRecipe);
+  recipeView.render(model.state.recipe);
+  bookmarkView.render(model.state.bookmarks);
+  addRecipeView.renderMessage();
+  setTimeout(function() {
+    addRecipeView.toggleHidden();
+    addRecipeView.render();
+  }, MOADL_ESC_SEC * 1000);
+  } catch (e) {
+    console.error(e.message);
+    addRecipeView.renderError(e.message);
+  }
+}
+
 const init = function () {
   bookmarkView.bookmarkHandler(controlLoadBookmark);
   recipeView.recipeHandler(controlRecipes);
@@ -68,5 +87,6 @@ const init = function () {
   paginationView.pageinationHandler(controlPage);
   recipeView.servingHandler(controlServings);
   recipeView.bookmarkHandler(controlBookmark);
+  addRecipeView.addRecipeHandler(controladdRecipe);
 };
 init();

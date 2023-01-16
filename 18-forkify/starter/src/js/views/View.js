@@ -5,7 +5,9 @@ export default class View {
 
   render(data) {
     this._data = data;
-    this._renderHtml();
+    const markup = this._getMarkupHtml();
+    this._clear();
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
   update(data) {
     this._data = data;
@@ -29,8 +31,6 @@ export default class View {
       }
     })
   }
-
-  _renderHtml(){};
 
   renderLoding() {
     const markup = `
@@ -63,6 +63,19 @@ export default class View {
     this._parentEl.innerHTML = '';
   }
 
-  renderSuccess() {};
-}
+  renderMessage(message = this._message) {
+    const markup = `
+        <div class="message">
+            <div>
+              <svg>
+                <use href="${icon}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+    `
+    this._clear();
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
 
+  };
+}

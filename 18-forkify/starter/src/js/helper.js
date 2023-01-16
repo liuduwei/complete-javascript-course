@@ -35,3 +35,25 @@ export const getSearch = async function(query) {
     throw e;
   }
 }
+
+export const sendJson = async function(url, uploadData) {
+  try {
+    const fetchPro = fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'Application/json'
+      },
+      body: JSON.stringify(uploadData)
+    })
+
+    const req = await Promise.race([
+      fetchPro,
+      timeout(TIMEOUT_SEC),
+    ]);
+    const data = await req.json();
+    if (!req.ok) throw new Error(`${data.message}: (${req.status})`);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+}
