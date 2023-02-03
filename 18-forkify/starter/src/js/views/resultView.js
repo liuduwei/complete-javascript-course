@@ -2,12 +2,12 @@ import View from './View';
 import icon from 'url:../../img/icons.svg';
 class ResultView extends View {
   _parentEl = document.querySelector('.results');
-  render(data) {
-    this._data = data;
-    const markup = this._getMarkupHtml();
-    this._clear();
-    this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  }
+  // render(data) {
+  //   this._data = data;
+  //   const markup = this._getMarkupHtml();
+  //   this._clear();
+  //   this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  // }
 
   _getMarkupHtml() {
     return this._data.map(function (i) {

@@ -18,7 +18,6 @@ class searchView extends View{
       handler();
     })
   }
-  
 }
 
 export default new searchView();
