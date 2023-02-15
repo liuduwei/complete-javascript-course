@@ -1,5 +1,6 @@
-import View from './View';
 import icon from 'url:../../img/icons.svg';
+import View from './View';
+
 class ResultView extends View {
   _parentEl = document.querySelector('.results');
   // render(data) {
@@ -10,11 +11,14 @@ class ResultView extends View {
   // }
 
   _getMarkupHtml() {
-    return this._data.map(function (i) {
-      const id = window.location.hash.slice(1);
-      return `
+    return this._data
+      .map(i => {
+        const id = window.location.hash.slice(1);
+        return `
           <li class="preview">
-            <a class="preview__link ${i.id == id ? 'preview__link--active' : ''}" href="#${i.id}">
+            <a class="preview__link ${
+              i.id == id ? 'preview__link--active' : ''
+            }" href="#${i.id}">
               <figure class="preview__fig">
                 <img crossorigin="anonymous" src="${i.image_url}" alt="Test" />
               </figure>
@@ -30,7 +34,8 @@ class ResultView extends View {
             </a>
           </li>
     `;
-    }).join('');
+      })
+      .join('');
   }
 }
 

@@ -1,29 +1,32 @@
-import View from './View';
 import icon from 'url:../../img/icons.svg';
-class RecipeView extends View{
+import View from './View';
+
+class RecipeView extends View {
   _parentEl = document.querySelector('.recipe');
+
   _data;
-  _messageError = `Sorry con't get`;
+
+  _messageError = "Sorry con't get";
 
   recipeHandler(handler) {
     ['hashchange', 'load'].forEach(el => window.addEventListener(el, handler));
   }
 
   servingHandler(handler) {
-    this._parentEl.addEventListener('click', function(e) {
+    this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
       const { updateTo } = btn.dataset;
-      if (+updateTo > 0) handler(+updateTo);
-    })
+      if (Number(updateTo) > 0) handler(Number(updateTo));
+    });
   }
 
   bookmarkHandler(handler) {
-    this._parentEl.addEventListener('click', function(e) {
+    this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.btn--bookmark');
-      if(!btn) return;
+      if (!btn) return;
       handler();
-    })
+    });
   }
 
   render(data) {
@@ -33,13 +36,11 @@ class RecipeView extends View{
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
 
-
-
   _getMarkupHtml() {
     return `
         <figure class="recipe__fig">
           <img crossorigin="anonymous" src="${this._data.image}" alt="${
-      this._data.title  
+      this._data.title
     }" class="recipe__img" />
           <h1 class="recipe__title">
             <span>${this._data.title}</span>
@@ -90,7 +91,9 @@ class RecipeView extends View{
           </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
-              <use href="${icon}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
+              <use href="${icon}#icon-bookmark${
+      this._data.bookmarked ? '-fill' : ''
+    }"></use>
             </svg>
           </button>
         </div>
@@ -125,12 +128,10 @@ class RecipeView extends View{
     `;
   }
 
-  
-
   _getMarkupRecipeIngredient() {
     return this._data.ingredients
-      .map(function (i) {
-        return `
+      .map(
+        i => `
                 <li class="recipe__ingredient">
                   <svg class="recipe__icon">
                     <use href="${icon}#icon-check"></use>
@@ -141,8 +142,8 @@ class RecipeView extends View{
                     ${i.description}
                   </div>
                 </li>
-            `;
-      })
+            `
+      )
       .join('');
   }
 }

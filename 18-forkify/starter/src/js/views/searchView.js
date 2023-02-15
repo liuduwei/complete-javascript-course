@@ -1,7 +1,8 @@
-import View from "./View";
-class searchView extends View{
+import View from './View';
+
+class searchView extends View {
   _parentEl = document.querySelector('.search');
-  
+
   _clear() {
     this._parentEl.querySelector('input').value = '';
   }
@@ -13,10 +14,10 @@ class searchView extends View{
   }
 
   searchHandler(handler) {
-    this._parentEl.addEventListener('submit', function(e) {
+    this._parentEl.addEventListener('submit', e => {
       e.preventDefault();
       handler();
-    })
+    });
   }
 }
 

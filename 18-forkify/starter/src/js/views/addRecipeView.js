@@ -1,10 +1,16 @@
 import View from './View';
+
 class addRecipeView extends View {
   _parentEl = document.querySelector('.upload');
+
   _overlay = document.querySelector('.overlay');
+
   _btnClose = document.querySelector('.btn--close-modal');
+
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
+
   _addRecipeWindow = document.querySelector('.add-recipe-window');
+
   _message = 'upload success';
 
   constructor() {
@@ -81,8 +87,7 @@ class addRecipeView extends View {
           </svg>
           <span>Upload</span>
         </button>
-    `
-
+    `;
   }
 
   toggleHidden() {
@@ -95,17 +100,17 @@ class addRecipeView extends View {
   }
 
   _closeAddWindowHandler() {
-    this._btnClose.addEventListener('click', this.toggleHidden.bind(this)); 
+    this._btnClose.addEventListener('click', this.toggleHidden.bind(this));
     this._overlay.addEventListener('click', this.toggleHidden.bind(this));
   }
 
   addRecipeHandler(handler) {
-    this._parentEl.addEventListener('submit', function(e) {
+    this._parentEl.addEventListener('submit', function (e) {
       e.preventDefault();
       const dataForm = [...new FormData(this)];
       const dataRecipe = Object.fromEntries(dataForm);
       handler(dataRecipe);
-    }) 
+    });
   }
 }
 

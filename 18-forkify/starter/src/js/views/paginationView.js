@@ -1,10 +1,10 @@
-import View from './View';
 import icon from 'url:../../img/icons.svg';
+import View from './View';
 
 class PaginationView extends View {
   _parentEl = document.querySelector('.pagination');
 
-  //data //state.search
+  // data //state.search
   _renderHtml() {
     const markup = this._generatorMarkup();
     this._clear();
@@ -17,7 +17,7 @@ class PaginationView extends View {
       this._data.recipes.length / this._data.perPageNum
     );
     if (this._data.currentPage == 1 && maxPage == 1) {
-      return ``;
+      return '';
     }
     // page 1 and other pages
     if (this._data.currentPage == 1 && maxPage != 1) {
@@ -68,10 +68,10 @@ class PaginationView extends View {
   }
 
   pageinationHandler(handler) {
-    this._parentEl.addEventListener('click', function (e) {
+    this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.btn--inline');
       if (!btn) return;
-      const pageGoTo = +btn.dataset.goto;
+      const pageGoTo = Number(btn.dataset.goto);
       handler(pageGoTo);
     });
   }

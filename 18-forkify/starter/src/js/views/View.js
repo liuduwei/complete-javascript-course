@@ -1,6 +1,8 @@
 import icon from 'url:../../img/icons.svg';
+
 export default class View {
   _parentEl;
+
   _data;
 
   render(data) {
@@ -9,6 +11,7 @@ export default class View {
     this._clear();
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
+
   update(data) {
     this._data = data;
     // console.log(this._data);
@@ -17,19 +20,22 @@ export default class View {
     const newElement = Array.from(newDom.querySelectorAll('*'));
     const currentElement = Array.from(this._parentEl.querySelectorAll('*'));
 
-    newElement.forEach(function(newEl, i) {
+    newElement.forEach((newEl, i) => {
       const curEl = currentElement[i]; // console.log(curEl, newEl.isEqualNode(curEl));
       // console.dir(newEl);
-      if(!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
-        curEl.textContent = newEl.textContent
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEl.textContent;
       }
 
-      if(!newEl.isEqualNode(curEl)) {
-        Array.from(newEl.attributes).forEach(function(el) {
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(el => {
           curEl.setAttribute(el.name, el.value);
         });
       }
-    })
+    });
   }
 
   renderLoding() {
@@ -54,7 +60,7 @@ export default class View {
             </div>
             <p>${message}</p>
           </div>
-    `
+    `;
     this._clear();
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
@@ -73,9 +79,8 @@ export default class View {
             </div>
             <p>${message}</p>
           </div>
-    `
+    `;
     this._clear();
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
-
-  };
+  }
 }
