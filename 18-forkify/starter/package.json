@@ -2,11 +2,12 @@
   "name": "fork",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "lint": "eslint --ext .js --fix src/js/",
-     "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "author": "liu",
   "license": "ISC",

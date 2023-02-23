@@ -18,9 +18,11 @@ module.exports = {
     // override configuration set by extending "eslint:recommended"
     'no-empty': 'warn',
     'no-cond-assign': ['error', 'always'],
+    'no-useless-catch': 'off',
 
     // disable rules from base configurations
     'for-direction': 'off',
     'no-console': 'off',
+    'no-unused-vars': 'off',
   },
 };
