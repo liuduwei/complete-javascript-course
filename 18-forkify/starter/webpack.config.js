@@ -1,12 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('node:path');
-const { getOptions } = require('loader-utils');
-
-module.exports = function (source) {
-  const options = getOptions(this);
-  const url = source.replace('url:', ''); // Remove the "url:" scheme
-  return `module.exports = "${url}";`;
-};
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -19,27 +13,33 @@ module.exports = {
     rules: [
       {
         test: /\.svg$/,
-        oneOf: [
+        use: [
           {
-            resourceQuery: /url:/,
-            use: [
-              {
-                loader: 'url-loader.js',
-              },
-            ],
-          },
-          {
-            use: [
-              {
-                loader: 'svg-url-loader',
-                options: {
-                  limit: 10000, // Any file smaller than this will be inlined
-                },
-              },
-            ],
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000, // Any file smaller than this will be inlined
+            },
           },
         ],
       },
+      {
+        test: /\.(sass|scss|css)/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      title: 'forkify',
+    }),
+    new CleanWebpackPlugin(),
+  ],
+  devServer: {
+    host: '127.0.0.1',
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
   },
 };

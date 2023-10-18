@@ -7,6 +7,7 @@ import resultView from './views/resultView.js';
 import bookmarkView from './views/bookmarkView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { MOADL_ESC_SEC } from './config.js';
+import '../sass/main.scss';
 
 /// ////////////////////////////////////
 

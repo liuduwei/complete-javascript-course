@@ -1,4 +1,4 @@
-import icon from 'url:../../img/icons.svg';
+import icon from '../../img/icons.svg';
 import View from './View';
 
 class previewView extends View {
